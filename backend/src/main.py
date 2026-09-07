@@ -1,6 +1,7 @@
 import os
 os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
 import json
+from config import DOCS_DIR
 from fastapi import FastAPI, HTTPException, File, UploadFile
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -25,7 +26,9 @@ DOCS_DIR = "D:/X/0315/data/documents"
 
 
 class RAGEngine:
-    def __init__(self, data_dir: str = "D:/X/0315/data/documents"):
+    def __init__(self, data_dir: str = None):
+        if data_dir is None:
+            data_dir = DOCS_DIR
         self.data_dir = data_dir
         self.store = VectorStore()
         self.store.create_collection()

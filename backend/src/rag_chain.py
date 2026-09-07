@@ -1,5 +1,6 @@
 import os
 os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
+from config import DOCS_DIR
 from openai import OpenAI
 from dotenv import load_dotenv
 from loader import load_text_files
@@ -7,7 +8,9 @@ from splitter import split_by_structure
 from retriever import VectorStore
 load_dotenv()
 class RAGChain:
-    def __init__(self, data_dir: str = "D:/X/0315/data/documents"):
+    def __init__(self, data_dir: str = None):
+        if data_dir is None:
+            data_dir = DOCS_DIR
         self.data_dir = data_dir
         self.store = VectorStore()
         self.store.create_collection()
